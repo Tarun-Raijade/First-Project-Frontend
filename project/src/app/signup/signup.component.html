@@ -1,41 +1,115 @@
-<mat-card class="example-card card">
+<mat-card *ngIf="!loggedIn" class="example-card card">
   <div class="col-md-12">
     <div class="row">
       <div class="col-md-6">
         <img src="assets/images/signup.jpg" alt="Image" class="signup-image">
       </div>
-  <div class="col-md-6">
-      <mat-card-content class="justify-content-center">
-        <h1>Sign Up</h1>
-        <form [formGroup]="signupForm">
-          <div class="row">
-            <div class="col-md-6">
-              <mat-form-field appearance="fill">
-                <mat-label>Username</mat-label>
-                <input matInput type="text" formControlName="username" required>
-              </mat-form-field>
+      <div class="col-md-6">
+        <mat-card-content class="justify-content-center">
+          <h1>Sign Up</h1>
+          <form [formGroup]="signupForm">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field appearance="fill">
+                      <mat-label>First Name</mat-label>
+                      <input matInput type="text" formControlName="firstName" required>
+                    </mat-form-field>
+                    <mat-error *ngIf="signupForm.controls['firstName'].invalid && (signupForm.controls['firstName'].dirty || signupForm.controls['firstName'].touched)">
+                      <span *ngIf="signupForm.controls['firstName'].errors.required">First name is required.</span>
+                    </mat-error>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Last name</mat-label>
+                      <input matInput type="text" formControlName="lastName" required>
+                    </mat-form-field>
+                    <mat-error *ngIf="signupForm.controls['lastName'].invalid && (signupForm.controls['lastName'].dirty || signupForm.controls['lastName'].touched)">
+                      <span *ngIf="signupForm.controls['lastName'].errors.required">Last name is required.</span>
+                    </mat-error>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                  <mat-label>Username</mat-label>
+                  <input matInput type="text" formControlName="userName" required>
+                </mat-form-field>
+                <mat-error *ngIf="signupForm.controls['userName'].invalid && (signupForm.controls['userName'].dirty || signupForm.controls['userName'].touched)">
+                      <span *ngIf="signupForm.controls['userName'].errors.required">Username is required.</span>
+                    </mat-error>
+              </div>
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-6">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Email</mat-label>
+                      <input matInput type="email" formControlName="email" required>
+                    </mat-form-field>
+                    <mat-error *ngIf="signupForm.controls['email'].invalid && (signupForm.controls['email'].dirty || signupForm.controls['email'].touched)">
+                      <span *ngIf="signupForm.controls['email'].errors.required">Email is required.</span>
+                    </mat-error>
+                  </div>
+                  <div class="col-md-6">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Password</mat-label>
+                      <input matInput type="password" formControlName="password" required>
+                    </mat-form-field>
+                    <mat-error *ngIf="signupForm.controls['password'].invalid && (signupForm.controls['password'].dirty || signupForm.controls['password'].touched)">
+                      <span *ngIf="signupForm.controls['password'].errors.required">Password is required.</span>
+                    </mat-error>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-md-6">
-              <mat-form-field appearance="fill">
-                <mat-label>Email</mat-label>
-                <input matInput type="email" formControlName="email" required>
-              </mat-form-field>
-            </div>
-            <div class="col-md-6">
-              <mat-form-field appearance="fill">
-                <mat-label>Password</mat-label>
-                <input matInput type="password" formControlName="password" required>
-              </mat-form-field>
-            </div>
-          </div>
-        </form>
-      </mat-card-content>
-    </div>
+          </form>
+        </mat-card-content>
+      </div>
     </div>
   </div>
-
-
   <mat-card-actions>
-    <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Sign Up</button>
+    <button mat-raised-button color="primary" [disabled]="signupForm.invalid" type="submit" (click)="signUp()">Sign
+      Up</button>
   </mat-card-actions>
+</mat-card>
+
+<mat-card *ngIf="loggedIn" class="example-card card">
+  <div class="col-md-12">
+    <div class="row">
+      <div class="col-md-6">
+        <mat-card-content class="justify-content-center">
+          <h1>Login</h1>
+          <form [formGroup]="loginForm">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                  <mat-label>Username</mat-label>
+                  <input matInput type="text" formControlName="userName" required>
+                </mat-form-field>
+                     <mat-error *ngIf="loginForm.controls['userName'].invalid && (loginForm.controls['userName'].dirty || loginForm.controls['userName'].touched)">
+                      <span *ngIf="loginForm.controls['userName'].errors.required">Username is required.</span>
+                    </mat-error>
+              </div>
+              <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                  <mat-label>Password</mat-label>
+                  <input matInput type="password" formControlName="password" required>
+                </mat-form-field>
+                     <mat-error *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)">
+                      <span *ngIf="loginForm.controls['password'].errors.required">Password is required.</span>
+                    </mat-error>
+              </div>
+            </div>
+          </form>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" [disabled]="loginForm.invalid" type="submit" (click)="login()">Login</button>
+          </mat-card-actions>
+        </mat-card-content>
+      </div>
+      <div class="col-md-6">
+        <img src="assets/images/login.png" alt="Image" class="signup-image">
+      </div>
+    </div>
+  </div>
 </mat-card>

@@ -17,7 +17,8 @@ export class SignupComponent {
 
   unsubscribe$ = new Subject<boolean>();
   signupForm: FormGroup;
-
+  loggedIn: boolean = false;
+  loginForm: FormGroup;
   constructor(
     private fb: FormBuilder,
     private signupService: SignupService,
@@ -26,27 +27,42 @@ export class SignupComponent {
 
   ngOnInit() {
     this.signupForm = this.fb.group({
-      username: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      userName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    });
+    this.loginForm = this.fb.group({
+      userName: ['', Validators.required],
       password: ['', Validators.required]
     });
   }
 
-  onSubmit() {
+  signUp() {
     var data = {
-      username: this.signupForm.get('username').value,
+      firstName: this.signupForm.get('firstName').value,
+      lastName: this.signupForm.get('lastName').value,
+      username: this.signupForm.get('userName').value,
       email: this.signupForm.get('email').value,
       password: this.signupForm.get('password').value
     }
     this.signupService.signupFormData(data).subscribe((response: any) => {
-      console.log("data:", data)
-      this.toastr.success('Successfully signed up ', 'My App');
+      this.toastr.success('Signed up successfully.', 'My App');
+      this.loggedIn = true;
     },
       (error) => {
-        this.toastr.error('Error submitting signup form', 'My App');
+        this.toastr.error('Error in signing up.', 'My App');
         console.error("error:", error)
 
       }
     );
+  }
+
+  login() {
+    var data = {
+      username: this.signupForm.get('username').value,
+      password: this.signupForm.get('password').value
+    }
   }
 }
